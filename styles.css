@@ -1,0 +1,1218 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.phone-container {
+    perspective: 1000px;
+}
+
+.phone {
+    width: 360px;
+    height: 800px;
+    border-radius: 40px;
+    border: 8px solid #1a1a1a;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+.phone::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 25px;
+    background: #1a1a1a;
+    border-radius: 0 0 20px 20px;
+    z-index: 100;
+}
+
+/* Status Bar */
+.status-bar {
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: #fff;
+    z-index: 50;
+}
+
+.status-left, .status-right {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+}
+
+.status-time {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+/* Screen Area */
+.screen {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+}
+
+/* Lock Screen */
+.lock-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 40px 20px;
+    color: #fff;
+    z-index: 10;
+}
+
+.lock-screen.active {
+    display: flex;
+}
+
+.lock-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.lock-time {
+    font-size: 64px;
+    font-weight: 300;
+    letter-spacing: -2px;
+}
+
+.lock-date {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+.lock-widgets {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.widget-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 12px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.widget-icon {
+    font-size: 16px;
+}
+
+.lock-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.lock-swipe-hint {
+    text-align: center;
+    opacity: 0.6;
+    font-size: 13px;
+    animation: bounce 2s infinite;
+}
+
+.unlock-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.unlock-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: scale(1.05);
+}
+
+.unlock-btn:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+}
+
+/* Home Screen */
+.home-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    display: none;
+    flex-direction: column;
+    z-index: 5;
+}
+
+.home-screen.active {
+    display: flex;
+}
+
+.home-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    overflow-y: auto;
+}
+
+.top-bar {
+    text-align: right;
+    padding-bottom: 16px;
+}
+
+.app-time {
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+}
+
+.quick-panel-toggle {
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    margin-bottom: 12px;
+    transition: all 0.3s ease;
+}
+
+.quick-panel-toggle:active {
+    background: rgba(0, 0, 0, 0.1);
+    transform: scale(0.95);
+}
+
+/* App Grid */
+.app-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 20px 0;
+}
+
+.app-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.app-icon:active {
+    transform: scale(0.92);
+}
+
+.app-icon-bg {
+    width: 80px;
+    height: 80px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.phone-app {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.messages-app {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.camera-app {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.gallery-app {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.calendar-app {
+    background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+}
+
+.settings-app {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+}
+
+.music-app {
+    background: linear-gradient(135deg, #ff9a56 0%, #ff6a88 100%);
+}
+
+.weather-app {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+.calculator-app {
+    background: linear-gradient(135deg, #ff6e7f 0%, #bfe9ff 100%);
+}
+
+.flappybird-app {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.snakegame-app {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.game2048-app {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+}
+
+.app-icon-bg:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.app-icon span {
+    font-size: 12px;
+    color: #000;
+    text-align: center;
+}
+
+/* Quick Panel */
+.quick-panel {
+    position: absolute;
+    top: 0;
+    right: -400px;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 16px;
+    z-index: 20;
+    transition: right 0.3s ease;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.quick-panel.open {
+    right: 0;
+}
+
+.quick-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-weight: 600;
+    color: #000;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.quick-toggles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.quick-toggle {
+    background: rgba(0, 0, 0, 0.05);
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 12px;
+    color: #666;
+}
+
+.quick-toggle.active {
+    background: rgba(100, 150, 255, 0.1);
+    border-color: rgba(100, 150, 255, 0.3);
+    color: #4169e1;
+}
+
+.quick-toggle:active {
+    transform: scale(0.95);
+}
+
+.toggle-icon {
+    font-size: 24px;
+}
+
+.quick-brightness {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    color: #000;
+    font-weight: 500;
+}
+
+.quick-brightness input {
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.1);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.quick-brightness input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #4169e1;
+    cursor: pointer;
+}
+
+/* App Windows */
+.app-phone, .app-messages, .app-camera, .app-gallery, 
+.app-calendar, .app-settings, .app-music, .app-weather, .app-calculator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    z-index: 8;
+    animation: slideUp var(--animation-speed, 0.6s) cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideUp {
+    from { 
+        transform: translateY(100%) scale(0.95) rotateX(45deg);
+        opacity: 0;
+    }
+    to { 
+        transform: translateY(0) scale(1) rotateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateY(0) scale(1) rotateX(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%) scale(0.95) rotateX(45deg);
+        opacity: 0;
+    }
+}
+
+.app-header {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0));
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-weight: 600;
+    color: #000;
+}
+
+.app-back {
+    background: none;
+    border: none;
+    color: #4169e1;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.app-back:active {
+    opacity: 0.7;
+}
+
+.app-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+}
+
+/* App Specific Styles */
+.contact-list, .message-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contact-item, .message-item {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 12px;
+    border-radius: 12px;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.contact-item:active, .message-item:active {
+    background: rgba(65, 105, 225, 0.1);
+}
+
+.message-input {
+    display: flex;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.message-input input {
+    flex: 1;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 8px 12px;
+    font-size: 14px;
+    outline: none;
+}
+
+.message-input button {
+    background: #4169e1;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.message-input button:active {
+    opacity: 0.8;
+}
+
+.camera-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+#cameraStream {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #000;
+}
+
+.camera-display {
+    width: 100%;
+    aspect-ratio: 9/16;
+    background: linear-gradient(45deg, #333, #666);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 24px;
+}
+
+.camera-controls {
+    display: flex;
+    gap: 12px;
+}
+
+.camera-controls button {
+    background: #4169e1;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.camera-controls button:active {
+    transform: scale(0.95);
+}
+
+.shutter-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    padding: 0;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.gallery-item {
+    aspect-ratio: 1;
+    background: linear-gradient(45deg, #ddd, #eee);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.gallery-item:active {
+    transform: scale(0.95);
+}
+
+.calendar-view {
+    padding: 20px;
+}
+
+.calendar-header {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: #000;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    color: #666;
+    font-size: 14px;
+}
+
+.calendar-day.today {
+    background: #4169e1;
+    color: white;
+    font-weight: 600;
+}
+
+/* Settings */
+.settings-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.settings-card {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.settings-title {
+    padding: 12px 16px;
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.08);
+    color: #000;
+}
+
+.settings-item {
+    padding: 12px 16px;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    color: #333;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-item:active {
+    background: rgba(65, 105, 225, 0.1);
+}
+
+.toggle-item {
+    padding: 16px;
+}
+
+.toggle-switch {
+    background: #ccc;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.toggle-switch.active {
+    background: #4169e1;
+}
+
+.setting-brightness, .setting-select, .setting-input {
+    padding: 8px 12px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-size: 14px;
+    max-width: 120px;
+}
+
+.setting-select, .setting-input {
+    background: rgba(0, 0, 0, 0.05);
+    color: #333;
+    outline: none;
+}
+
+.setting-input {
+    padding: 8px 12px;
+}
+
+.setting-brightness {
+    flex: 1;
+    max-width: 100px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.1);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.setting-brightness::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #4169e1;
+    cursor: pointer;
+}
+
+/* Music Player */
+.music-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.music-player {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.album-art {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 80px;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3);
+}
+
+.track-info {
+    text-align: center;
+}
+
+.track-name {
+    font-weight: 600;
+    color: #000;
+    font-size: 16px;
+}
+
+.artist-name {
+    color: #666;
+    font-size: 14px;
+    margin-top: 4px;
+}
+
+.music-controls {
+    display: flex;
+    gap: 20px;
+    font-size: 24px;
+}
+
+.music-controls button {
+    background: rgba(0, 0, 0, 0.05);
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.music-controls button:active {
+    transform: scale(0.9);
+}
+
+.play-btn {
+    background: #4169e1;
+    color: white;
+    width: 56px;
+    height: 56px;
+}
+
+.progress-bar {
+    width: 100%;
+}
+
+.progress-bar input {
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(0, 0, 0, 0.1);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.progress-bar input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #4169e1;
+    cursor: pointer;
+}
+
+/* Weather */
+.weather-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 20px;
+}
+
+.weather-main {
+    text-align: center;
+}
+
+.weather-icon {
+    font-size: 80px;
+    margin-bottom: 12px;
+}
+
+.temperature {
+    font-size: 48px;
+    font-weight: 300;
+    color: #000;
+}
+
+.weather-desc {
+    font-size: 16px;
+    color: #666;
+    margin-top: 8px;
+}
+
+.weather-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+}
+
+.detail-item {
+    background: rgba(0, 0, 0, 0.05);
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: #333;
+}
+
+/* Calculator */
+.calculator-content {
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.calc-display {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    padding: 20px;
+    text-align: right;
+    font-size: 32px;
+    font-weight: 600;
+    color: #000;
+    margin-bottom: 16px;
+    min-height: 60px;
+}
+
+.calc-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+}
+
+.calc-buttons button {
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.calc-buttons button:active {
+    background: rgba(65, 105, 225, 0.2);
+    transform: scale(0.95);
+}
+
+.calc-buttons button.op {
+    background: #4169e1;
+    color: white;
+    border: none;
+}
+
+.calc-buttons button.equals {
+    background: #4169e1;
+    color: white;
+    border: none;
+}
+
+.calc-buttons button.zero {
+    grid-column: span 2;
+}
+
+/* Navigation Bar */
+.nav-bar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 12px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 8px 16px;
+    transition: all 0.2s ease;
+}
+
+.nav-btn:active {
+    transform: scale(0.9);
+    opacity: 0.7;
+}
+
+/* Scrollbar styling */
+.app-content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.app-content::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.app-content::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+}
+
+.app-content::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .phone {
+        width: 320px;
+        height: 640px;
+    }
+
+    .app-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lock-time {
+        font-size: 48px;
+    }
+}
+
+/* Game Styles */
+.game-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.game-board {
+    position: relative;
+    width: 100%;
+    height: 300px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.bird {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
+    top: 50%;
+    left: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: top 0.05s linear;
+}
+
+.pipe {
+    position: absolute;
+    width: 50px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(0, 0, 0, 0.5);
+}
+
+.pipe.top {
+    height: 100px;
+    top: 0;
+    right: 0;
+}
+
+.pipe.bottom {
+    height: 100px;
+    bottom: 0;
+    right: 0;
+}
+
+.snake-board {
+    width: 100%;
+    height: 300px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 2px;
+    padding: 8px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.snake-cell {
+    background: transparent;
+    border-radius: 4px;
+}
+
+.snake-cell.head {
+    background: #4169e1;
+    box-shadow: 0 0 8px rgba(65, 105, 225, 0.5);
+}
+
+.snake-cell.body {
+    background: rgba(65, 105, 225, 0.6);
+}
+
+.snake-cell.food {
+    background: #ff6b6b;
+    box-shadow: 0 0 8px rgba(255, 107, 107, 0.5);
+}
+
+.game-2048 {
+    width: 100%;
+    max-width: 280px;
+    height: 280px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 8px;
+    padding: 8px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.game-2048 .tile {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 20px;
+    transition: all 0.15s ease;
+}
+
+.game-2048 .tile[data-value="2"] {
+    background: #eee4da;
+    color: #776e65;
+}
+
+.game-2048 .tile[data-value="4"] {
+    background: #ede0c8;
+    color: #776e65;
+}
+
+.game-2048 .tile[data-value="8"] {
+    background: #f2b179;
+    color: #f9f6f2;
+}
+
+.game-2048 .tile[data-value="16"] {
+    background: #f59563;
+    color: #f9f6f2;
+}
+
+.game-2048 .tile[data-value="32"] {
+    background: #f67c5f;
+    color: #f9f6f2;
+}
+
+.game-2048 .tile[data-value="64"] {
+    background: #f65e3b;
+    color: #f9f6f2;
+}
+
+.game-2048 .tile[data-value="128"] {
+    background: #edcf72;
+    color: #095f6b;
+    font-size: 16px;
+}
+
+.game-2048 .tile[data-value="256"] {
+    background: #edcc61;
+    color: #095f6b;
+    font-size: 16px;
+}
+
+.game-2048 .tile[data-value="512"] {
+    background: #edc850;
+    color: #095f6b;
+    font-size: 16px;
+}
+
+.game-2048 .tile[data-value="1024"] {
+    background: #edc53f;
+    color: #095f6b;
+    font-size: 14px;
+}
+
+.game-2048 .tile[data-value="2048"] {
+    background: #edc22e;
+    color: #095f6b;
+    font-size: 14px;
+}
+
+.game-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.score {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+}
+
+.game-btn {
+    background: #4169e1;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.game-btn:active {
+    transform: scale(0.95);
+    opacity: 0.8;
+}

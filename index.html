@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>One UI 8 Phone Emulator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="phone-container">
+        <!-- Phone Bezel -->
+        <div class="phone">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="status-left">
+                    <span class="signal">📶</span>
+                    <span class="network">5G</span>
+                </div>
+                <div class="status-time" id="time">9:41</div>
+                <div class="status-right">
+                    <span class="battery">🔋</span>
+                    <span id="battery-percent">100%</span>
+                </div>
+            </div>
+
+            <!-- Screen Content -->
+            <div class="screen" id="screen">
+                <!-- Lock Screen -->
+                <div class="lock-screen active" id="lockScreen">
+                    <div class="lock-content">
+                        <div class="lock-time" id="lockTime">9:41</div>
+                        <div class="lock-date" id="lockDate">Wednesday, November 26</div>
+                        <div class="lock-widgets">
+                            <div class="widget-item">
+                                <span class="widget-icon">🌡️</span>
+                                <span class="widget-text">72°F</span>
+                            </div>
+                            <div class="widget-item">
+                                <span class="widget-icon">📅</span>
+                                <span class="widget-text">3 Events</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="lock-controls">
+                        <div class="lock-swipe-hint">☝️ Swipe up to unlock</div>
+                        <button class="unlock-btn" id="unlockBtn">🔓 Unlock</button>
+                    </div>
+                </div>
+
+                <!-- Home Screen -->
+                <div class="home-screen" id="homeScreen">
+                    <div class="home-content">
+                        <div class="top-bar">
+                            <div class="app-time" id="homeTime">9:41</div>
+                        </div>
+
+                        <!-- Quick Panel Toggle -->
+                        <button class="quick-panel-toggle" id="quickPanelToggle">
+                            <span class="toggle-icon">≡</span>
+                        </button>
+
+                        <!-- App Grid -->
+                        <div class="app-grid" id="appGrid">
+                            <div class="app-icon" data-app="phone">
+                                <div class="app-icon-bg phone-app">📱</div>
+                                <span>Phone</span>
+                            </div>
+                            <div class="app-icon" data-app="messages">
+                                <div class="app-icon-bg messages-app">💬</div>
+                                <span>Messages</span>
+                            </div>
+                            <div class="app-icon" data-app="camera">
+                                <div class="app-icon-bg camera-app">📷</div>
+                                <span>Camera</span>
+                            </div>
+                            <div class="app-icon" data-app="gallery">
+                                <div class="app-icon-bg gallery-app">🖼️</div>
+                                <span>Gallery</span>
+                            </div>
+                            <div class="app-icon" data-app="calendar">
+                                <div class="app-icon-bg calendar-app">📅</div>
+                                <span>Calendar</span>
+                            </div>
+                            <div class="app-icon" data-app="settings">
+                                <div class="app-icon-bg settings-app">⚙️</div>
+                                <span>Settings</span>
+                            </div>
+                            <div class="app-icon" data-app="music">
+                                <div class="app-icon-bg music-app">🎵</div>
+                                <span>Music</span>
+                            </div>
+                            <div class="app-icon" data-app="weather">
+                                <div class="app-icon-bg weather-app">🌤️</div>
+                                <span>Weather</span>
+                            </div>
+                            <div class="app-icon" data-app="calculator">
+                                <div class="app-icon-bg calculator-app">🧮</div>
+                                <span>Calculator</span>
+                            </div>
+                            <div class="app-icon" data-app="flappybird">
+                                <div class="app-icon-bg flappybird-app">🐦</div>
+                                <span>Flappy Bird</span>
+                            </div>
+                            <div class="app-icon" data-app="snakegame">
+                                <div class="app-icon-bg snakegame-app">🐍</div>
+                                <span>Snake</span>
+                            </div>
+                            <div class="app-icon" data-app="2048">
+                                <div class="app-icon-bg game2048-app">🎰</div>
+                                <span>2048</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Panel -->
+                <div class="quick-panel" id="quickPanel">
+                    <div class="quick-header">
+                        <span>Quick Settings</span>
+                        <button class="close-btn" id="closeQuickPanel">✕</button>
+                    </div>
+                    <div class="quick-toggles">
+                        <button class="quick-toggle active" data-toggle="wifi">
+                            <span class="toggle-icon">📡</span>
+                            <span>Wi-Fi</span>
+                        </button>
+                        <button class="quick-toggle active" data-toggle="bluetooth">
+                            <span class="toggle-icon">🔵</span>
+                            <span>Bluetooth</span>
+                        </button>
+                        <button class="quick-toggle" data-toggle="nfc">
+                            <span class="toggle-icon">📲</span>
+                            <span>NFC</span>
+                        </button>
+                        <button class="quick-toggle active" data-toggle="location">
+                            <span class="toggle-icon">📍</span>
+                            <span>Location</span>
+                        </button>
+                    </div>
+                    <div class="quick-brightness">
+                        <span>🔆 Brightness</span>
+                        <input type="range" id="brightness" min="20" max="100" value="100">
+                    </div>
+                </div>
+
+                <!-- App Windows -->
+                <div class="app-phone active" id="appPhone" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="phone">← Back</button>
+                        <span>Phone</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content">
+                        <div class="contact-list">
+                            <div class="contact-item">📞 John Doe</div>
+                            <div class="contact-item">📞 Jane Smith</div>
+                            <div class="contact-item">📞 Mom</div>
+                            <div class="contact-item">📞 Work</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-messages active" id="appMessages" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="messages">← Back</button>
+                        <span>Messages</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content">
+                        <div class="message-list">
+                            <div class="message-item">💬 John: Hey, how are you?</div>
+                            <div class="message-item">💬 Jane: Available for lunch?</div>
+                            <div class="message-item">💬 Mom: Call me when free</div>
+                        </div>
+                        <div class="message-input">
+                            <input type="text" placeholder="Type a message...">
+                            <button>Send</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-camera active" id="appCamera" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="camera">← Back</button>
+                        <span>Camera</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content camera-view">
+                        <video id="cameraStream" class="camera-display"></video>
+                        <div class="camera-controls">
+                            <button class="shutter-btn" id="captureBtn">📸</button>
+                            <button id="toggleCamBtn">🔄</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-gallery active" id="appGallery" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="gallery">← Back</button>
+                        <span>Gallery</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content">
+                        <div class="gallery-grid">
+                            <div class="gallery-item">🌅 Photo 1</div>
+                            <div class="gallery-item">🌆 Photo 2</div>
+                            <div class="gallery-item">🌃 Photo 3</div>
+                            <div class="gallery-item">🌉 Photo 4</div>
+                            <div class="gallery-item">🌇 Photo 5</div>
+                            <div class="gallery-item">🎆 Photo 6</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-calendar active" id="appCalendar" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="calendar">← Back</button>
+                        <span>Calendar</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content">
+                        <div class="calendar-view">
+                            <div class="calendar-header">November 2025</div>
+                            <div class="calendar-grid">
+                                <div class="calendar-day">1</div>
+                                <div class="calendar-day">2</div>
+                                <div class="calendar-day">3</div>
+                                <div class="calendar-day">4</div>
+                                <div class="calendar-day">5</div>
+                                <div class="calendar-day">6</div>
+                                <div class="calendar-day">7</div>
+                                <div class="calendar-day today">26</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-settings active" id="appSettings" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="settings">← Back</button>
+                        <span>Settings</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content settings-content">
+                        <div class="settings-card">
+                            <div class="settings-title">Display</div>
+                            <div class="settings-item toggle-item">
+                                <span>Brightness</span>
+                                <input type="range" class="setting-brightness" min="20" max="100" value="100">
+                            </div>
+                            <div class="settings-item toggle-item">
+                                <span>Dark Mode</span>
+                                <button class="toggle-switch" data-setting="darkmode">OFF</button>
+                            </div>
+                            <div class="settings-item toggle-item">
+                                <span>Screen Timeout</span>
+                                <select class="setting-select">
+                                    <option>30s</option>
+                                    <option>1m</option>
+                                    <option>2m</option>
+                                    <option>5m</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="settings-card">
+                            <div class="settings-title">System</div>
+                            <div class="settings-item">
+                                <span>Battery: <strong id="battery-level">100%</strong></span>
+                            </div>
+                            <div class="settings-item">
+                                <span>Storage: <strong>64GB Available</strong></span>
+                            </div>
+                            <div class="settings-item">
+                                <span>About Phone</span>
+                            </div>
+                        </div>
+                        <div class="settings-card">
+                            <div class="settings-title">Device</div>
+                            <div class="settings-item toggle-item">
+                                <span>Device Name</span>
+                                <input type="text" class="setting-input" value="My Phone" placeholder="Device name">
+                            </div>
+                            <div class="settings-item toggle-item">
+                                <span>Animation Speed</span>
+                                <select class="setting-select" id="animation-speed">
+                                    <option value="0.3s">Fast</option>
+                                    <option value="0.6s" selected>Normal</option>
+                                    <option value="1s">Slow</option>
+                                    <option value="2s">Extra Slow</option>
+                                </select>
+                            </div>
+                            <div class="settings-item toggle-item">
+                                <span>Security</span>
+                                <button class="toggle-switch active" data-setting="security">ON</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-music active" id="appMusic" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="music">← Back</button>
+                        <span>Music</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content music-content">
+                        <div class="music-player">
+                            <div class="album-art">🎵</div>
+                            <div class="track-info">
+                                <div class="track-name">Summer Vibes</div>
+                                <div class="artist-name">Music Artists</div>
+                            </div>
+                            <div class="music-controls">
+                                <button>⏮️</button>
+                                <button class="play-btn">▶️</button>
+                                <button>⏭️</button>
+                            </div>
+                            <div class="progress-bar">
+                                <input type="range" value="35">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-weather active" id="appWeather" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="weather">← Back</button>
+                        <span>Weather</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content weather-content">
+                        <div class="weather-main">
+                            <div class="weather-icon">🌤️</div>
+                            <div class="temperature">72°F</div>
+                            <div class="weather-desc">Partly Cloudy</div>
+                        </div>
+                        <div class="weather-details">
+                            <div class="detail-item">💨 Wind: 5 mph</div>
+                            <div class="detail-item">💧 Humidity: 65%</div>
+                            <div class="detail-item">👁️ Visibility: 10 mi</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-calculator active" id="appCalculator" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="calculator">← Back</button>
+                        <span>Calculator</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content calculator-content">
+                        <div class="calc-display">0</div>
+                        <div class="calc-buttons">
+                            <button>7</button>
+                            <button>8</button>
+                            <button>9</button>
+                            <button class="op">÷</button>
+                            <button>4</button>
+                            <button>5</button>
+                            <button>6</button>
+                            <button class="op">×</button>
+                            <button>1</button>
+                            <button>2</button>
+                            <button>3</button>
+                            <button class="op">−</button>
+                            <button class="zero">0</button>
+                            <button>.</button>
+                            <button class="equals">=</button>
+                            <button class="op">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Flappy Bird Game -->
+                <div class="app-flappybird active" id="appFlappybird" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="flappybird">← Back</button>
+                        <span>Flappy Bird</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content game-content">
+                        <div class="game-board" id="flappyBoard">
+                            <div class="bird" id="bird">🐦</div>
+                            <div class="pipe top"></div>
+                            <div class="pipe bottom"></div>
+                        </div>
+                        <div class="game-info">
+                            <div class="score">Score: <span id="flappyScore">0</span></div>
+                            <button class="game-btn" id="flappyStart">Start Game</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Snake Game -->
+                <div class="app-snakegame active" id="appSnakegame" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="snakegame">← Back</button>
+                        <span>Snake</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content game-content">
+                        <div class="snake-board" id="snakeBoard"></div>
+                        <div class="game-info">
+                            <div class="score">Score: <span id="snakeScore">0</span></div>
+                            <button class="game-btn" id="snakeStart">Start Game</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2048 Game -->
+                <div class="app-2048 active" id="app2048" style="display: none;">
+                    <div class="app-header">
+                        <button class="app-back" data-close="2048">← Back</button>
+                        <span>2048</span>
+                        <div></div>
+                    </div>
+                    <div class="app-content game-content">
+                        <div class="game-2048" id="game2048">
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                            <div class="tile"></div>
+                        </div>
+                        <div class="game-info">
+                            <div class="score">Score: <span id="game2048Score">0</span></div>
+                            <button class="game-btn" id="game2048Start">New Game</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Bar -->
+            <div class="nav-bar">
+                <button class="nav-btn" id="homeBtn">🏠</button>
+                <button class="nav-btn" id="backBtn">←</button>
+                <button class="nav-btn" id="recentBtn">◆</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
